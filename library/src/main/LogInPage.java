@@ -17,6 +17,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class LogInPage extends Application {
 
     public static void main(String[] args) {
@@ -55,6 +60,9 @@ public class LogInPage extends Application {
         PasswordField passwordField = new PasswordField();
 
         Button submitButton = new Button("Submit");
+        submitButton.setOnAction(event -> {
+            validateLogin(loginLabel.getText(), passwordLabel.getText());
+        });
 
         gridPane.add(loginLabel, 0, 0);
         gridPane.add(loginText, 1, 0);
@@ -80,8 +88,49 @@ public class LogInPage extends Application {
         return hBox;
     }
 
-    private boolean validateLogin() {
-        
+    private HBox addBottomPane() {
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(10));
+        return hBox;
+    }
+
+    private boolean validateLogin(String userNameIn, String passwordIn) {
+
+        try {
+            FileReader reader = new FileReader("../resources/userLogin");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+
+            String line;
+
+            if ((line = bufferedReader.readLine()) != null) {
+                if (!userNameIn.equals(line)) {
+                    reader.close();
+                    return false;
+                }
+            }
+            else {
+                reader.close();
+                return false;
+            }
+
+            if ((line = bufferedReader.readLine()) != null) {
+                if (!passwordIn.equals(line)) {
+                    reader.close();
+                    return false;
+                }
+                else {
+                    reader.close();
+                    return true;
+                }
+            }
+            else {
+                reader.close();
+                return false;
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
