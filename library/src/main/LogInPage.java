@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,25 +18,27 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class LogInPage extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    private Text errorText;
+    private TextField loginText;
+    PasswordField passwordField;
+
+    public static void main(String[] args) { launch(args); }
 
     @Override
     public void start(Stage primaryStage) {
+
+        System.out.println(new File(".").getAbsolutePath());
 
         BorderPane borderPane = new BorderPane();
         HBox hBox = addHBox();
         borderPane.setTop(hBox);
 
         borderPane.setCenter(addGridPane());
+        borderPane.setBottom(addBottomPane());
 
         // Create scene
         Scene scene = new Scene(borderPane, 700, 400);
@@ -54,14 +57,24 @@ public class LogInPage extends Application {
         gridPane.setVgap(20);
 
         Label loginLabel = new Label("Username");
-        TextField loginText = new TextField();
+        loginText = new TextField();
 
         Label passwordLabel = new Label("Password");
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
 
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
-            validateLogin(loginLabel.getText(), passwordLabel.getText());
+            boolean validate = validateLogin(loginLabel.getText(), passwordLabel.getText());
+
+            if (!validate) {
+                loginText.setText("");
+                passwordField.setText("");
+            }
+            else {
+                errorText.setText(" ");
+            }
+
+            //TODO: After validation is successful, move to another scene that allows user to check in/check out
         });
 
         gridPane.add(loginLabel, 0, 0);
@@ -91,13 +104,26 @@ public class LogInPage extends Application {
     private HBox addBottomPane() {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10));
+
+        errorText = new Text();
+        errorText.setFill(Color.RED);
+
+        hBox.getChildren().add(errorText);
+        hBox.setAlignment(Pos.CENTER);
+
         return hBox;
     }
 
+    /**
+     * Check if username and password are correct
+     * @param userNameIn entered username
+     * @param passwordIn entered password
+     * @return boolean to confirm if username and password are correct or not
+     */
     private boolean validateLogin(String userNameIn, String passwordIn) {
 
         try {
-            FileReader reader = new FileReader("../resources/userLogin");
+            FileReader reader = new FileReader("src/resources/userLogin.txt");
             BufferedReader bufferedReader = new BufferedReader(reader);
 
             String line;
@@ -105,26 +131,36 @@ public class LogInPage extends Application {
             if ((line = bufferedReader.readLine()) != null) {
                 if (!userNameIn.equals(line)) {
                     reader.close();
+
+                    errorText.setText("Username or Password is Incorrect");
                     return false;
                 }
             }
             else {
                 reader.close();
+
+                errorText.setText("Username or Password is Incorrect");
                 return false;
             }
 
             if ((line = bufferedReader.readLine()) != null) {
                 if (!passwordIn.equals(line)) {
                     reader.close();
+
+                    errorText.setText("Username or Password is Incorrect");
                     return false;
                 }
                 else {
                     reader.close();
+
+                    errorText.setText("");
                     return true;
                 }
             }
             else {
                 reader.close();
+
+                errorText.setText("Username or Password is Incorrect");
                 return false;
             }
 
