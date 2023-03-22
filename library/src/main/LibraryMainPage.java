@@ -5,12 +5,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class LibraryMainPage extends Application {
+
+    private static Stage guiStage;
+    private static Scene scene1;
 
     public static void main(String[] args) {
         launch(args);
@@ -18,19 +23,40 @@ public class LibraryMainPage extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        guiStage = primaryStage;
+
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(addFlowPane());
+        borderPane.setTop(addTop());
 
         // Create scene
         Scene scene = new Scene(borderPane, 1500, 800);
+        scene1 = scene;
 
         primaryStage.setTitle("Library - Main Page");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    private FlowPane addFlowPane() {
+    public static Stage getStage() {
+        return guiStage;
+    }
+
+    public static Scene getScene() {
+        BorderPane borderPane = new BorderPane();
+
+        borderPane.setCenter(addFlowPane());
+        borderPane.setTop(addTop());
+
+        // Create scene
+        Scene scene = new Scene(borderPane, 1500, 800);
+        scene1 = scene;
+
+        return scene1;
+    }
+
+    private static FlowPane addFlowPane() {
         FlowPane flowPane = new FlowPane();
         flowPane.setPadding(new Insets(5));
         flowPane.setHgap(5);
@@ -53,7 +79,17 @@ public class LibraryMainPage extends Application {
         return flowPane;
     }
 
-    public HBox addTop() {
+    public static HBox addTop() {
+
         HBox hBox = new HBox();
+        hBox.setPadding(new Insets(50, 20, 0 , 20));
+        hBox.setSpacing(10);
+
+        Label title = new Label("Library - Main Menu");
+        title.setFont(Font.font(40));
+        hBox.getChildren().add(title);
+        hBox.setAlignment(Pos.CENTER);
+
+        return hBox;
     }
 }

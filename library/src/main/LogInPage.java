@@ -25,6 +25,7 @@ public class LogInPage extends Application {
     private Text errorText;
     private TextField loginText;
     PasswordField passwordField;
+    private Stage tempStage;
 
     public static void main(String[] args) { launch(args); }
 
@@ -45,6 +46,8 @@ public class LogInPage extends Application {
 
         primaryStage.setTitle("Library - Login");
         primaryStage.setScene(scene);
+
+        tempStage = primaryStage;
         primaryStage.show();
 
     }
@@ -64,7 +67,7 @@ public class LogInPage extends Application {
 
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
-            boolean validate = validateLogin(loginLabel.getText(), passwordLabel.getText());
+            boolean validate = validateLogin(loginText.getText(), passwordField.getText());
 
             if (!validate) {
                 loginText.setText("");
@@ -72,7 +75,14 @@ public class LogInPage extends Application {
             }
             else {
                 errorText.setText(" ");
+                Scene newScene = LibraryMainPage.getScene();
+                Stage newStage = new Stage();
+                newStage.setTitle("Library - Main Page");
+                newStage.setScene(newScene);
+                newStage.show();
+                tempStage.close();
             }
+
 
             //TODO: After validation is successful, move to another scene that allows user to check in/check out
         });
@@ -128,7 +138,7 @@ public class LogInPage extends Application {
 
             String line;
 
-            if ((line = bufferedReader.readLine()) != null) {
+            if ((line = bufferedReader.readLine().trim()) != null) {
                 if (!userNameIn.equals(line)) {
                     reader.close();
 
@@ -143,7 +153,7 @@ public class LogInPage extends Application {
                 return false;
             }
 
-            if ((line = bufferedReader.readLine()) != null) {
+            if ((line = bufferedReader.readLine().trim()) != null) {
                 if (!passwordIn.equals(line)) {
                     reader.close();
 
@@ -152,6 +162,7 @@ public class LogInPage extends Application {
                 }
                 else {
                     reader.close();
+
 
                     errorText.setText("");
                     return true;
