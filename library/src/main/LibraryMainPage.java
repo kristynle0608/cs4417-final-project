@@ -39,10 +39,6 @@ public class LibraryMainPage extends Application {
         primaryStage.show();
     }
 
-    public static Stage getStage() {
-        return guiStage;
-    }
-
     public static Scene getScene() {
         BorderPane borderPane = new BorderPane();
 
