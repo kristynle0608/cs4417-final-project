@@ -1,5 +1,7 @@
 package main;
 
+import java.time.LocalDate;
+
 public class Book {
 
     private String title;
@@ -8,14 +10,15 @@ public class Book {
 
     private String borrower;
 
-    private static int idStatic = 0;
+    private LocalDate checkOutDate;
+
+    private LocalDate dueDate;
 
     private static int id;
 
     public Book (String titleIn, String authorIn, int idIn) {
         title = titleIn;
         author = authorIn;
-        borrower = null;
         id = idIn;
     }
 
@@ -48,4 +51,20 @@ public class Book {
     }
 
     public void setId (int idStatic) { id = idStatic; }
+
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(LocalDate checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 }
