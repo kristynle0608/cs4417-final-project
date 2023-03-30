@@ -57,6 +57,7 @@ public class AddBooksPage extends Application {
         TextField authorText = new TextField();
 
         Button submit = new Button("Submit");
+        Button clear = new Button("Clear");
 
         gridPane.add(instructions, 0, 0, 2, 1);
         gridPane.add(bookTitleLabel, 0, 1);
@@ -64,6 +65,7 @@ public class AddBooksPage extends Application {
         gridPane.add(authorLabel, 0, 2);
         gridPane.add(authorText, 1, 2);
         gridPane.add(submit, 0, 3);
+        gridPane.add(clear, 1, 3);
 
         submit.setOnAction(event -> {
             boolean add = addBooks(bookTitleText.getText(), authorText.getText());
@@ -79,6 +81,12 @@ public class AddBooksPage extends Application {
                 instructions.setText("Successfully added book. Please close the window.");
                 instructions.setTextFill(Color.GREEN);
             }
+        });
+        clear.setOnAction(event -> {
+            instructions.setText("Enter all the information below to add a new book:");
+            instructions.setTextFill(Color.BLACK);
+            bookTitleText.setText("");
+            authorText.setText("");
         });
 
         gridPane.setAlignment(Pos.CENTER);
