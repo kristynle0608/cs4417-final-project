@@ -12,12 +12,11 @@ public class Book {
 
     private static int id;
 
-    public Book (String titleIn, String authorIn) {
+    public Book (String titleIn, String authorIn, int idIn) {
         title = titleIn;
         author = authorIn;
         borrower = null;
-        id = idStatic;
-        idStatic++;
+        id = idIn;
     }
 
     public String getTitle() {
@@ -47,4 +46,6 @@ public class Book {
     public int getId() {
         return id;
     }
+
+    public void setId (int idStatic) { id = idStatic; }
 }

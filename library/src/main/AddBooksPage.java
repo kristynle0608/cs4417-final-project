@@ -9,11 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AddBooksPage extends Application {
-
-    private Library library;
 
     public static void main(String[] args) {
         launch(args);
@@ -30,6 +29,14 @@ public class AddBooksPage extends Application {
         primaryStage.setTitle("Library - Add Books To Library");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static Scene getScene() {
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(addGridPane());
+
+        // Create scene
+        return new Scene(borderPane, 700, 400);
     }
 
     private static GridPane addGridPane() {
@@ -50,7 +57,6 @@ public class AddBooksPage extends Application {
         TextField authorText = new TextField();
 
         Button submit = new Button("Submit");
-        Button clear = new Button("Clear");
 
         gridPane.add(instructions, 0, 0, 2, 1);
         gridPane.add(bookTitleLabel, 0, 1);
@@ -60,8 +66,19 @@ public class AddBooksPage extends Application {
         gridPane.add(submit, 0, 3);
 
         submit.setOnAction(event -> {
+            boolean add = addBooks(bookTitleText.getText(), authorText.getText());
 
-            boolean find = addBooks();
+            if (!add) {
+                //TODO-: clear every text box and shows an error
+                instructions.setText("Unable to add book. Please try again.");
+                instructions.setTextFill(Color.RED);
+                bookTitleText.setText("");
+                authorText.setText("");
+            }
+            else {
+                instructions.setText("Successfully added book. Please close the window.");
+                instructions.setTextFill(Color.GREEN);
+            }
         });
 
         gridPane.setAlignment(Pos.CENTER);
@@ -69,7 +86,9 @@ public class AddBooksPage extends Application {
     }
 
     private static boolean addBooks(String bookTitle, String authorName) {
-        boolean add = false;
+        boolean add;
+
+        add = Library.addNewBookToStorage(bookTitle, authorName);
 
         return add;
     }

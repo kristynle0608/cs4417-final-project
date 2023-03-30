@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -62,6 +63,14 @@ public class LibraryMainPage extends Application {
         Button checkOutBook = new Button("Check Out Book");
         Button allBooks = new Button("All Books");
         Button checkInBooks = new Button("Check In Book");
+
+        addNewBook.setOnAction(event -> {
+            Scene newScene = AddBooksPage.getScene();
+            Stage newStage = new Stage();
+            newStage.setTitle("Library - Add New Book");
+            newStage.setScene(newScene);
+            newStage.show();
+        });
 
         addNewBook.setPrefSize(200,200);
         checkOutBook.setPrefSize(200, 200);

@@ -1,5 +1,8 @@
 package main;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Library {
@@ -15,20 +18,64 @@ public class Library {
         storage = new ArrayList<Book>();
     }
 
-    public boolean addNewBookToStorage(String bookTitle, String author) {
-        // check if book exists in storage
-        for (int i = 0; i < storage.size(); i++) {
-            Book book = storage.get(i);
+    public static boolean addNewBookToStorage(String bookTitle, String author) {
 
-            if (bookTitle.equalsIgnoreCase(book.getTitle()) && author.equalsIgnoreCase(book.getAuthor())) {
-                return false;
+        int idTemp = getLastAddedId()+1;
+        Book newBook = new Book(bookTitle, author, idTemp);
+
+        String[] bookInfo = {bookTitle, author, String.valueOf(idTemp)};
+
+        try {
+            File fileToWrite = new File("src/resources/books.txt");
+            FileWriter fileWriter = new FileWriter(fileToWrite, true);
+
+            for (int i = 0; i < bookInfo.length; i++) {
+                fileWriter.write(bookInfo[i]);
+                if (i < bookInfo.length - 1) {
+                    fileWriter.write(",");
+                }
             }
-        }
+            fileWriter.write(System.lineSeparator());
 
-        Book newBook = new Book(bookTitle, author);
-        storage.add(newBook);
+            fileWriter.close();
+        }
+        catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
 
         return true;
     }
+
+    private static int getLastAddedId() {
+        int lastAddedId = 0;
+        String fileContent = "";
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("src/resources/books.txt"));
+
+            String line;
+            while((line = bufferedReader.readLine()) != null) {
+                String[] bookInfo = line.split(",");
+
+                fileContent += line;
+
+                if (!fileContent.trim().isEmpty()) {
+                    lastAddedId = Integer.parseInt(bookInfo[2]);
+                }
+            }
+
+            return lastAddedId;
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Book> getStorage() {
+        return storage;
+    }
+
 
 }
