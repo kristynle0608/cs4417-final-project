@@ -72,6 +72,14 @@ public class LibraryMainPage extends Application {
             newStage.show();
         });
 
+        checkOutBook.setOnAction(event -> {
+            Scene newScene = CheckOutBooksPage.getScene();
+            Stage newStage = new Stage();
+            newStage.setTitle("Library - Check Out Books");
+            newStage.setScene(newScene);
+            newStage.show();
+        });
+
         addNewBook.setPrefSize(200,200);
         checkOutBook.setPrefSize(200, 200);
         allBooks.setPrefSize(200, 200);

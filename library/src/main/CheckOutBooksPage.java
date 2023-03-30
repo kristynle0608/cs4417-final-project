@@ -1,17 +1,22 @@
 package main;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class CheckOutBooksPage extends Application {
+
+    private static Book selectedBook;
 
     public static void main(String[] args) {
         launch(args);
@@ -23,12 +28,25 @@ public class CheckOutBooksPage extends Application {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
+        scrollPane.setPadding(new Insets(30, 10, 30, 10));
+
         // Create scene
         Scene scene = new Scene(scrollPane, 700, 400);
 
         primaryStage.setTitle("Library - Check Out Books");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static Scene getScene() {
+        ScrollPane scrollPane = new ScrollPane(addGridPane());
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        scrollPane.setPadding(new Insets(30, 10, 30, 10));
+
+        // Create scene
+        return new Scene(scrollPane, 700, 400);
     }
 
     private static GridPane addGridPane() {
@@ -41,7 +59,11 @@ public class CheckOutBooksPage extends Application {
 
         Label chooseBookLabel = new Label("Click on a book in the table");
 
+        ObservableList<Book> bookList = Library.getBookList();
+
         TableView<Book> tableView = new TableView<>();
+
+        tableView.setItems(bookList);
 
         TableColumn<Book, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -50,17 +72,68 @@ public class CheckOutBooksPage extends Application {
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
 
-// Add the columns to the TableView
+        // Add the columns to the TableView
         tableView.getColumns().addAll(idColumn, titleColumn, authorColumn);
 
-        Label borrowersNameTable = new Label("Borrower's Name");
+        // table view setOnMouseClicked
+        tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                selectedBook = tableView.getSelectionModel().getSelectedItem();
+            }
+        });
+
+        Label borrowersNameLabel = new Label("Borrower's Name");
         TextField borrowersNameText = new TextField();
 
-        Label checkOutDate = new Label("Check Out Date");
+        Label checkOutDateLabel = new Label("Check Out Date");
+        DatePicker checkOutDatePicker = new DatePicker();
+
+        checkOutDatePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(date.isBefore(today));
+            }
+        });
+
+        // due date
+        Label dueDateLabel = new Label("Due Date");
+        DatePicker dueDatePicker = new DatePicker();
+
+        dueDatePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(date.isBefore(today));
+            }
+        });
+
+        Button checkOutButton = new Button("Check Out Book");
+        Button clear = new Button("Clear");
+
+        // checkOutButton setOnAction
+        checkOutButton.setOnAction(event -> {
+            try {
+                Library.checkOutSelectedBook(selectedBook, borrowersNameText.getText(), checkOutDatePicker.getValue(),
+                        dueDatePicker.getValue(), bookList);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         // Add the TableView to the GridPane
         gridPane.add(chooseBookLabel, 0, 0);
-        gridPane.add(tableView, 1, 0, 2, 1);
+        gridPane.add(tableView, 1, 0, 3, 1);
+        gridPane.add(borrowersNameLabel, 0, 1);
+        gridPane.add(borrowersNameText, 1, 1);
+        gridPane.add(checkOutDateLabel, 0, 2);
+        gridPane.add(checkOutDatePicker, 1, 2);
+        gridPane.add(dueDateLabel, 0, 3);
+        gridPane.add(dueDatePicker, 1, 3);
+        gridPane.add(clear, 0, 4);
+        gridPane.add(checkOutButton, 1, 4);
 
         gridPane.setAlignment(Pos.CENTER);
         return gridPane;

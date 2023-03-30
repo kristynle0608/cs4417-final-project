@@ -2,7 +2,7 @@ package main;
 
 import java.time.LocalDate;
 
-public class Book {
+public class Book implements Comparable<Book>{
 
     private String title;
 
@@ -14,12 +14,17 @@ public class Book {
 
     private LocalDate dueDate;
 
-    private static int id;
+    private int id;
 
-    public Book (String titleIn, String authorIn, int idIn) {
+    public Book (int idIn, String titleIn, String authorIn) {
+        id = idIn;
         title = titleIn;
         author = authorIn;
-        id = idIn;
+    }
+
+    @Override
+    public int compareTo(Book other) {
+        return this.id - other.id;
     }
 
     public String getTitle() {

@@ -64,8 +64,8 @@ public class AddBooksPage extends Application {
         gridPane.add(bookTitleText, 1, 1);
         gridPane.add(authorLabel, 0, 2);
         gridPane.add(authorText, 1, 2);
-        gridPane.add(submit, 0, 3);
-        gridPane.add(clear, 1, 3);
+        gridPane.add(clear, 0, 3);
+        gridPane.add(submit, 1, 3);
 
         submit.setOnAction(event -> {
             boolean add = addBooks(bookTitleText.getText(), authorText.getText());
