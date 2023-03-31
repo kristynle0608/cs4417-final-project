@@ -81,7 +81,7 @@ public class LibraryMainPage extends Application {
         });
 
         checkInBooks.setOnAction(event -> {
-            Scene newScene = CheckInPage.getScene();
+            Scene newScene = CheckInBooksPage.getScene();
             Stage newStage = new Stage();
             newStage.setTitle("Library - Check In Books");
             newStage.setScene(newScene);

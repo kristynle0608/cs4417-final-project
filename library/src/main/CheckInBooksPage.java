@@ -10,31 +10,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
-public class CheckInPage extends Application {
+public class CheckInBooksPage extends Application {
 
     private static Book selectedBook;
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        ScrollPane scrollPane = new ScrollPane(addGridPane());
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-
-        scrollPane.setPadding(new Insets(30, 10, 30, 10));
-
-        // Create scene
-        Scene scene = new Scene(scrollPane, 700, 400);
-
-        primaryStage.setTitle("Library - Check In Books");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public static Scene getScene() {
@@ -114,5 +97,21 @@ public class CheckInPage extends Application {
 
         gridPane.setAlignment(Pos.CENTER);
         return gridPane;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        ScrollPane scrollPane = new ScrollPane(addGridPane());
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        scrollPane.setPadding(new Insets(30, 10, 30, 10));
+
+        // Create scene
+        Scene scene = new Scene(scrollPane, 700, 400);
+
+        primaryStage.setTitle("Library - Check In Books");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
