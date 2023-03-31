@@ -4,8 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -52,6 +50,7 @@ public class Library {
 
     private static int getLastAddedId() {
         int lastAddedId = 0;
+        int tempId;
         String fileContent = "";
 
         try {
@@ -64,7 +63,10 @@ public class Library {
                 fileContent += line;
 
                 if (!fileContent.trim().isEmpty()) {
-                    lastAddedId = Integer.parseInt(bookInfo[0]);
+                    tempId = Integer.parseInt(bookInfo[0]);
+                    if (lastAddedId < tempId) {
+                        lastAddedId = tempId;
+                    }
                 }
             }
 
@@ -140,6 +142,11 @@ public class Library {
         String lineToRemove = selectedBook.getId() + "," + selectedBook.getTitle() + ","
                 + selectedBook.getAuthor();
 
+        removeDataFromFile(file, checkOutFile, lineToRemove);
+
+    }
+
+    private static void removeDataFromFile(String file, String checkOutFile, String lineToRemove) {
         try {
             File inFile = new File(file);
             File outCheckedOutFile = new File(checkOutFile);
@@ -186,7 +193,6 @@ public class Library {
             e.printStackTrace();
         }
     }
-
 
 
 }
