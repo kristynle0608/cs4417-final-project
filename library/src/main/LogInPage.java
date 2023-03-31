@@ -35,8 +35,6 @@ public class LogInPage extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        System.out.println(new File(".").getAbsolutePath());
-
         BorderPane borderPane = new BorderPane();
         HBox hBox = addHBox();
         borderPane.setTop(hBox);

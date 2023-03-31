@@ -5,8 +5,11 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 public class Library {
+
+    private static Logger log = Logger.getLogger(Library.class.getName());
 
     public Library() {}
 
@@ -165,7 +168,7 @@ public class Library {
             File outCheckedOutFile = new File(checkOutFile);
 
             if (!inFile.isFile()) {
-                System.out.println("Parameter is not an existing file");
+                log.fine("Parameter is not an existing file");
             }
 
             // create a temporary file to write the modified contents
@@ -195,12 +198,12 @@ public class Library {
 
             // delete the original file
             if (!inFile.delete()) {
-                System.out.println("Could not delete the original file");
+                log.fine("Could not delete the original file");
             }
 
             // rename the temporary file to the original file name
             if (!tempFile.renameTo(inFile)) {
-                System.out.println("Could not rename the temporary file");
+                log.fine("Could not rename the temporary file");
             }
         } catch (Exception e) {
             e.printStackTrace();
