@@ -18,19 +18,6 @@ public class AddBooksPage extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(addGridPane());
-
-        // Create scene
-        Scene scene = new Scene(borderPane, 700, 400);
-
-        primaryStage.setTitle("Library - Add Books To Library");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
     public static Scene getScene() {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(addGridPane());
@@ -76,8 +63,7 @@ public class AddBooksPage extends Application {
                 instructions.setTextFill(Color.RED);
                 bookTitleText.setText("");
                 authorText.setText("");
-            }
-            else {
+            } else {
                 instructions.setText("Successfully added book. Please close the window.");
                 instructions.setTextFill(Color.GREEN);
             }
@@ -99,5 +85,18 @@ public class AddBooksPage extends Application {
         add = Library.addNewBookToStorage(bookTitle, authorName);
 
         return add;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(addGridPane());
+
+        // Create scene
+        Scene scene = new Scene(borderPane, 700, 400);
+
+        primaryStage.setTitle("Library - Add Books To Library");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

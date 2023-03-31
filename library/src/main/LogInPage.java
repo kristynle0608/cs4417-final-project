@@ -1,33 +1,36 @@
 package main;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class LogInPage extends Application {
 
+    PasswordField passwordField;
     private Text errorText;
     private TextField loginText;
-    PasswordField passwordField;
     private Stage tempStage;
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -72,8 +75,7 @@ public class LogInPage extends Application {
             if (!validate) {
                 loginText.setText("");
                 passwordField.setText("");
-            }
-            else {
+            } else {
                 errorText.setText(" ");
                 Scene newScene = LibraryMainPage.getScene();
                 Stage newStage = new Stage();
@@ -83,13 +85,11 @@ public class LogInPage extends Application {
                 tempStage.close();
             }
 
-
-            //TODO: After validation is successful, move to another scene that allows user to check in/check out
         });
 
         gridPane.add(loginLabel, 0, 0);
         gridPane.add(loginText, 1, 0);
-        gridPane.add(passwordLabel, 0,1);
+        gridPane.add(passwordLabel, 0, 1);
         gridPane.add(passwordField, 1, 1);
         gridPane.add(submitButton, 0, 2);
 
@@ -100,7 +100,7 @@ public class LogInPage extends Application {
 
     private HBox addHBox() {
         HBox hBox = new HBox();
-        hBox.setPadding(new Insets(50, 20, 0 , 20));
+        hBox.setPadding(new Insets(50, 20, 0, 20));
         hBox.setSpacing(10);
 
         Label title = new Label("Library - Login Page");
@@ -126,6 +126,7 @@ public class LogInPage extends Application {
 
     /**
      * Check if username and password are correct
+     *
      * @param userNameIn entered username
      * @param passwordIn entered password
      * @return boolean to confirm if username and password are correct or not
@@ -146,8 +147,7 @@ public class LogInPage extends Application {
                     errorText.setText("Username or Password is Incorrect");
                     return false;
                 }
-            }
-            else {
+            } else {
                 reader.close();
                 bufferedReader.close();
 
@@ -162,16 +162,14 @@ public class LogInPage extends Application {
 
                     errorText.setText("Username or Password is Incorrect");
                     return false;
-                }
-                else {
+                } else {
                     reader.close();
                     bufferedReader.close();
 
                     errorText.setText("");
                     return true;
                 }
-            }
-            else {
+            } else {
                 reader.close();
                 bufferedReader.close();
 

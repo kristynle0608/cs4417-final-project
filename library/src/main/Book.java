@@ -2,7 +2,7 @@ package main;
 
 import java.time.LocalDate;
 
-public class Book implements Comparable<Book>{
+public class Book implements Comparable<Book> {
 
     private String title;
 
@@ -16,7 +16,7 @@ public class Book implements Comparable<Book>{
 
     private int id;
 
-    public Book (int idIn, String titleIn, String authorIn) {
+    public Book(int idIn, String titleIn, String authorIn) {
         id = idIn;
         title = titleIn;
         author = authorIn;
@@ -55,7 +55,9 @@ public class Book implements Comparable<Book>{
         return id;
     }
 
-    public void setId (int idStatic) { id = idStatic; }
+    public void setId(int idStatic) {
+        id = idStatic;
+    }
 
     public LocalDate getCheckOutDate() {
         return checkOutDate;

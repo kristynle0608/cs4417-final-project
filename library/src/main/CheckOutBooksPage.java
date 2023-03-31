@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class CheckOutBooksPage extends Application {
 
@@ -21,22 +20,6 @@ public class CheckOutBooksPage extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        ScrollPane scrollPane = new ScrollPane(addGridPane());
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-
-        scrollPane.setPadding(new Insets(30, 10, 30, 10));
-
-        // Create scene
-        Scene scene = new Scene(scrollPane, 1000, 500);
-
-        primaryStage.setTitle("Library - Check Out Books");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public static Scene getScene() {
@@ -128,8 +111,7 @@ public class CheckOutBooksPage extends Application {
                 feedbackLabel.setText("Book unsuccessfully checked out. Please try again.");
                 feedbackLabel.setTextFill(Color.RED);
                 throw new RuntimeException(e);
-            }
-            catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 feedbackLabel.setText("Book unsuccessfully checked out. Invalid or Missing Inputs.");
                 feedbackLabel.setTextFill(Color.RED);
             }
@@ -152,11 +134,27 @@ public class CheckOutBooksPage extends Application {
         gridPane.add(checkOutDatePicker, 1, 2);
         gridPane.add(dueDateLabel, 0, 3);
         gridPane.add(dueDatePicker, 1, 3);
-        gridPane.add(feedbackLabel, 0, 4, 2,1);
+        gridPane.add(feedbackLabel, 0, 4, 2, 1);
         gridPane.add(clear, 0, 5);
         gridPane.add(checkOutButton, 1, 5);
 
         gridPane.setAlignment(Pos.CENTER);
         return gridPane;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        ScrollPane scrollPane = new ScrollPane(addGridPane());
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        scrollPane.setPadding(new Insets(30, 10, 30, 10));
+
+        // Create scene
+        Scene scene = new Scene(scrollPane, 1000, 500);
+
+        primaryStage.setTitle("Library - Check Out Books");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

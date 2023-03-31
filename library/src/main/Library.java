@@ -9,21 +9,11 @@ import java.util.ArrayList;
 
 public class Library {
 
-    // List of checked-out books
-    private ArrayList<Book> checkOutList;
-
-    // List of current books that are in the library
-    private ArrayList<Book> storage;
-
-    public Library () {
-        checkOutList = new ArrayList<Book>();
-        storage = new ArrayList<Book>();
-    }
+    public Library() {}
 
     public static boolean addNewBookToStorage(String bookTitle, String author) {
 
-        int idTemp = getLastAddedId()+1;
-        Book newBook = new Book(idTemp, bookTitle, author);
+        int idTemp = getLastAddedId() + 1;
 
         String[] bookInfo = {String.valueOf(idTemp), bookTitle, author};
 
@@ -40,8 +30,7 @@ public class Library {
             fileWriter.write(System.lineSeparator());
 
             fileWriter.close();
-        }
-        catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
@@ -57,7 +46,7 @@ public class Library {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("src/resources/books.txt"));
 
             String line;
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] bookInfo = line.split(",");
 
                 fileContent += line;
@@ -75,7 +64,7 @@ public class Library {
             // check checkOut.txt
             BufferedReader bf = new BufferedReader(new FileReader("src/resources/checkOut.txt"));
 
-            while((line = bf.readLine()) != null) {
+            while ((line = bf.readLine()) != null) {
                 String[] bookInfo = line.split(",");
 
                 fileContent += line;
@@ -115,7 +104,7 @@ public class Library {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
 
             String line;
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] bookInfo = line.split(",");
 
                 fileContent += line;
@@ -126,8 +115,7 @@ public class Library {
             }
 
             bufferedReader.close();
-        }
-        catch (FileNotFoundException fileNotFoundException) {
+        } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -136,7 +124,7 @@ public class Library {
     }
 
     public static void checkOutSelectedBook(Book selectedBook, String borrower, LocalDate checkOutDate, LocalDate dueDate,
-                                               ObservableList<Book> bookList) throws IOException {
+                                            ObservableList<Book> bookList) throws IOException {
 
         String file = "src/resources/books.txt";
         String checkOutFile = "src/resources/checkOut.txt";
@@ -162,7 +150,7 @@ public class Library {
         String fileIn = "src/resources/checkOut.txt";
         String checkInFile = "src/resources/books.txt";
 
-        for(Book book : bookList) {
+        for (Book book : bookList) {
             if (book.compareTo(selectedBook) == 0) {
                 selectedBook = book;
             }

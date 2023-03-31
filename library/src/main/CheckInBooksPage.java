@@ -91,8 +91,7 @@ public class CheckInBooksPage extends Application {
                 Library.checkInSelectedBook(selectedBook, bookList);
                 feedbackLabel.setText("Book successfully checked out. You can now close this page.");
                 feedbackLabel.setTextFill(Color.GREEN);
-            }
-            catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 feedbackLabel.setText("Book unsuccessfully checked out. Invalid or Missing Inputs.");
                 feedbackLabel.setTextFill(Color.RED);
             }

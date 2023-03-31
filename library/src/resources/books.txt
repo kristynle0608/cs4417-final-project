@@ -7,9 +7,10 @@
 9,The Diary of A Young Girl,Anne Frank
 11,The Hobbit,J.R.R. Tolkien
 13,Fahrenheit 451,Ray Bradbury
-14,Jane Eyre,Charlotte Bronte
 15,Romeo and Juliet,William Shakespeare
 16,Frankenstein,Mary Shelley
 17,Room,Emma Donoghue
 18,Jane Eyre,Charlotte Bronte
 19,A Court of Wings and Ruins,Sarah J. Maas
+20,Co Hoa Vang Tren Co Xanh,Nguyen Nhat Anh
+14,Jane Eyre,Charlotte Bronte
