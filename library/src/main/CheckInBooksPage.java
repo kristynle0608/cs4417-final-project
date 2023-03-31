@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class CheckInBooksPage extends Application {
         scrollPane.setPadding(new Insets(30, 10, 30, 10));
 
         // Create scene
-        Scene scene = new Scene(scrollPane, 700, 400);
+        Scene scene = new Scene(scrollPane, 800, 500);
 
         return scene;
     }
@@ -46,6 +47,7 @@ public class CheckInBooksPage extends Application {
         ObservableList<Book> bookList = Library.getBookList("src/resources/checkOut.txt");
 
         TableView<Book> tableView = new TableView<>();
+        tableView.setPrefSize(350, 600);
 
         tableView.setItems(bookList);
 
@@ -55,7 +57,6 @@ public class CheckInBooksPage extends Application {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-
 
         // Add the columns to the TableView
         tableView.getColumns().addAll(idColumn, titleColumn, authorColumn);
@@ -82,9 +83,25 @@ public class CheckInBooksPage extends Application {
         Button checkInButton = new Button("Check In Book");
         Button clear = new Button("Clear");
 
+        Label feedbackLabel = new Label("");
+
         // checkInButton setOnAction
         checkInButton.setOnAction(event -> {
-            Library.checkInSelectedBook(selectedBook, bookList);
+            try {
+                Library.checkInSelectedBook(selectedBook, bookList);
+                feedbackLabel.setText("Book successfully checked out. You can now close this page.");
+                feedbackLabel.setTextFill(Color.GREEN);
+            }
+            catch (NullPointerException e) {
+                feedbackLabel.setText("Book unsuccessfully checked out. Invalid or Missing Inputs.");
+                feedbackLabel.setTextFill(Color.RED);
+            }
+        });
+
+        // clear button
+        clear.setOnAction(event -> {
+            checkInDatePicker.setValue(null);
+            feedbackLabel.setText("");
         });
 
         // Add the TableView to the GridPane
@@ -92,8 +109,9 @@ public class CheckInBooksPage extends Application {
         gridPane.add(tableView, 1, 0, 3, 1);
         gridPane.add(checkInDateLabel, 0, 1);
         gridPane.add(checkInDatePicker, 1, 1);
-        gridPane.add(clear, 0, 2);
-        gridPane.add(checkInButton, 1, 2);
+        gridPane.add(feedbackLabel, 0, 2, 2, 1);
+        gridPane.add(clear, 0, 3);
+        gridPane.add(checkInButton, 1, 3);
 
         gridPane.setAlignment(Pos.CENTER);
         return gridPane;
@@ -108,7 +126,7 @@ public class CheckInBooksPage extends Application {
         scrollPane.setPadding(new Insets(30, 10, 30, 10));
 
         // Create scene
-        Scene scene = new Scene(scrollPane, 700, 400);
+        Scene scene = new Scene(scrollPane, 800, 400);
 
         primaryStage.setTitle("Library - Check In Books");
         primaryStage.setScene(scene);

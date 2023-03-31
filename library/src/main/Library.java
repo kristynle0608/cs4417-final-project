@@ -121,9 +121,6 @@ public class Library {
                 if (!fileContent.trim().isEmpty()) {
                     books.add(new Book(Integer.parseInt(bookInfo[0]), bookInfo[1], bookInfo[2]));
                 }
-                else {
-                    books = null;
-                }
             }
 
             bufferedReader.close();

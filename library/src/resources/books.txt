@@ -1,4 +1,3 @@
-2,A Court of Mist and Fury,Sarah J. Maas
 3,To Kill A Mockingbird,Harper Lee
 4,1984,George Orwell
 5,Harry Potter and the Philosopher's Stone,J.K. Rowling
@@ -6,4 +5,11 @@
 1,A Court of Thorns and Roses,Sarah J. Maas
 7,Pride and Prejudice,Jane Austen
 9,The Diary of A Young Girl,Anne Frank
-10,The Book Thief,Markus Zusak
+11,The Hobbit,J.R.R. Tolkien
+13,Fahrenheit 451,Ray Bradbury
+14,Jane Eyre,Charlotte Bronte
+15,Romeo and Juliet,William Shakespeare
+16,Frankenstein,Mary Shelley
+17,Room,Emma Donoghue
+18,Jane Eyre,Charlotte Bronte
+19,A Court of Wings and Ruins,Sarah J. Maas
