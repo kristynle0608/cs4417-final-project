@@ -70,6 +70,24 @@ public class Library {
                 }
             }
 
+            bufferedReader.close();
+
+            // check checkOut.txt
+            BufferedReader bf = new BufferedReader(new FileReader("src/resources/checkOut.txt"));
+
+            while((line = bf.readLine()) != null) {
+                String[] bookInfo = line.split(",");
+
+                fileContent += line;
+
+                if (!fileContent.trim().isEmpty()) {
+                    tempId = Integer.parseInt(bookInfo[0]);
+                    if (lastAddedId < tempId) {
+                        lastAddedId = tempId;
+                    }
+                }
+            }
+
             return lastAddedId;
 
         } catch (FileNotFoundException e) {
