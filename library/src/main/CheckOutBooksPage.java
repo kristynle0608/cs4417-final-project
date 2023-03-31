@@ -57,9 +57,9 @@ public class CheckOutBooksPage extends Application {
         gridPane.setVgap(20);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        Label chooseBookLabel = new Label("Click on a book in the table");
+        Label chooseBookLabel = new Label("Book (Select a book by clicking on a row):");
 
-        ObservableList<Book> bookList = Library.getBookList();
+        ObservableList<Book> bookList = Library.getBookList("src/resources/books.txt");
 
         TableView<Book> tableView = new TableView<>();
 

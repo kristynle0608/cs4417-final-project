@@ -79,13 +79,8 @@ public class Library {
         }
     }
 
-    public ArrayList<Book> getStorage() {
-        return storage;
-    }
-
-    public static ObservableList<Book> getBookList() {
+    public static ObservableList<Book> getBookList(String filePath) {
         ObservableList<Book> bookList = FXCollections.observableArrayList();
-        String filePath = "src/resources/books.txt";
 
         Library.readDataFromFile(bookList, filePath);
 
@@ -144,6 +139,22 @@ public class Library {
 
         removeDataFromFile(file, checkOutFile, lineToRemove);
 
+    }
+
+    public static void checkInSelectedBook(Book selectedBook, ObservableList<Book> bookList) {
+        String fileIn = "src/resources/checkOut.txt";
+        String checkInFile = "src/resources/books.txt";
+
+        for(Book book : bookList) {
+            if (book.compareTo(selectedBook) == 0) {
+                selectedBook = book;
+            }
+        }
+
+        String lineToRemove = selectedBook.getId() + "," + selectedBook.getTitle()
+                + "," + selectedBook.getAuthor();
+
+        removeDataFromFile(fileIn, checkInFile, lineToRemove);
     }
 
     private static void removeDataFromFile(String file, String checkOutFile, String lineToRemove) {
