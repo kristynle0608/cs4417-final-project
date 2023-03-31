@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 
 public class LibraryMainPage extends Application {
 
-    private static Scene scene1;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -26,11 +24,7 @@ public class LibraryMainPage extends Application {
         borderPane.setCenter(addFlowPane());
         borderPane.setTop(addTop());
 
-        // Create scene
-        Scene scene = new Scene(borderPane, 1500, 800);
-        scene1 = scene;
-
-        return scene1;
+        return new Scene(borderPane, 1500, 800);
     }
 
     private static FlowPane addFlowPane() {
@@ -112,7 +106,6 @@ public class LibraryMainPage extends Application {
 
         // Create scene
         Scene scene = new Scene(borderPane, 1500, 800);
-        scene1 = scene;
 
         primaryStage.setTitle("Library - Main Page");
         primaryStage.setScene(scene);

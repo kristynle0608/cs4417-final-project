@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Library {
 
@@ -134,8 +133,6 @@ public class Library {
                 book.setBorrower(borrower);
                 book.setCheckOutDate(checkOutDate);
                 book.setDueDate(dueDate);
-
-                selectedBook = book;
             }
         }
 
@@ -151,8 +148,8 @@ public class Library {
         String checkInFile = "src/resources/books.txt";
 
         for (Book book : bookList) {
-            if (book.compareTo(selectedBook) == 0) {
-                selectedBook = book;
+            if (book.compareTo(selectedBook) != 0) {
+                return;
             }
         }
 
