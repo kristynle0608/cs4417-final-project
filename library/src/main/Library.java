@@ -88,6 +88,8 @@ public class Library {
                 }
             }
 
+            bf.close();
+
             return lastAddedId;
 
         } catch (FileNotFoundException e) {

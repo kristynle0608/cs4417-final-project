@@ -141,6 +141,7 @@ public class LogInPage extends Application {
             if ((line = bufferedReader.readLine().trim()) != null) {
                 if (!userNameIn.equals(line)) {
                     reader.close();
+                    bufferedReader.close();
 
                     errorText.setText("Username or Password is Incorrect");
                     return false;
@@ -148,6 +149,7 @@ public class LogInPage extends Application {
             }
             else {
                 reader.close();
+                bufferedReader.close();
 
                 errorText.setText("Username or Password is Incorrect");
                 return false;
@@ -156,13 +158,14 @@ public class LogInPage extends Application {
             if ((line = bufferedReader.readLine().trim()) != null) {
                 if (!passwordIn.equals(line)) {
                     reader.close();
+                    bufferedReader.close();
 
                     errorText.setText("Username or Password is Incorrect");
                     return false;
                 }
                 else {
                     reader.close();
-
+                    bufferedReader.close();
 
                     errorText.setText("");
                     return true;
@@ -170,10 +173,12 @@ public class LogInPage extends Application {
             }
             else {
                 reader.close();
+                bufferedReader.close();
 
                 errorText.setText("Username or Password is Incorrect");
                 return false;
             }
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
