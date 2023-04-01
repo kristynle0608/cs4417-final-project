@@ -33,7 +33,7 @@ public class Library {
 
             fileWriter.close();
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            log.fine("IOError detected.");
         }
 
         return true;
@@ -118,7 +118,7 @@ public class Library {
 
             bufferedReader.close();
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
+            log.fine("FileNotFound detected.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -206,7 +206,7 @@ public class Library {
                 log.fine("Could not rename the temporary file");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.fine("Error founded");
         }
     }
 

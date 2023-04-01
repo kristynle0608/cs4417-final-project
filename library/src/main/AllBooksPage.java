@@ -99,6 +99,7 @@ public class AllBooksPage extends Application {
     }
 
     static Comparator<Book> bookComparator = new Comparator<Book>() {
+        @Override
         public int compare(Book book1, Book book2) {
             return book1.getId() - book2.getId();
         }
